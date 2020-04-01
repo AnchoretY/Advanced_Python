@@ -46,9 +46,33 @@ print('b:' + str(b))        # b:{'a': 'hhhh'}
 ![image](https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.x30oinj2ykn.png)
 
 
+#### 3. 参数传递
+&emsp;&emsp;**在python中只有一种参数传递传递方式：传引用，也就是传递给函数的是原变量实际所指向的内存空间，修改的时候就会根据该引用的指向去修改该内存中的内容**，所以按道理说我们在函数内改变了传递过来的参数的值的话，原来外部的变量也应该受到影响。但是上面的一点中我们说到了python中有可变类型和不可变类型，这样的话，**当传过来的是可变类型(list,dict)等可变类型时，我们在函数内部修改就会影响函数外部的变量**。而**传入的是不可变类型时在函数内部修改改变量并不会影响函数外部的变量，因为修改的时候会先复制一份再修改**。下面通过代码证明一下：
 
+```python
+def test(a_int, b_list):
+    a_int = a_int + 1
+    b_list.append('13')
+    print('inner a_int:' + str(a_int))
+    print('inner b_list:' + str(b_list))
 
-#### 3. 字符串拼接
+if __name__ == '__main__':
+    a_int = 5
+    b_list = [10, 11]
+    test(a_int, b_list)
+    print('outer a_int:' + str(a_int))
+    print('outer b_list:' + str(b_list))
+```
+&emsp;&emsp;输出为：
+```python
+inner a_int:6
+inner b_list:[10, 11, '13']
+outer a_int:5
+outer b_list:[10, 11, '13']
+```
+&emsp;&emsp;可以明显的看出int类型传入的变量在函数内部虽然已经发生了改变，但是外部值依然没有改变；而传入的list外部变量随着函数内部变量的变化发生了改变
+
+#### 4. 字符串拼接
 &emsp;&emsp;**对于大量字符串的拼接操作，尽量应该使用将字符串加入列表，然后使用join函数加入空字符串的方式进行拼接**，避免使用for循环+=或+方式进行拼接，因为字符串是不可变对象，这种方式会不断地去创建新的对象，导致二次方的运行时间。
 ```diff
 + items = ['<table>']
@@ -62,12 +86,13 @@ print('b:' + str(b))        # b:{'a': 'hhhh'}
 -     employee_table += '<tr><td>%s, %s</td></tr>' % (last_name, first_name)
 - employee_table += '</table>'
 ```
-#### 3.生成器、迭代器  
+#### 5.生成器、迭代器  
 
-#### 3. raise  
+#### 6. raise  
 
-#### 4. 装饰器
+#### 7. 装饰器
 
 
-
+##### 参考文献
+- https://www.jianshu.com/p/c5582e23b26c
 
