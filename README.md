@@ -1,10 +1,10 @@
 # Advanced_Python
 Python一些比较高阶的使用技巧
 
-#### 1. Pythonic  
+### 1. Pythonic  
 &emsp;&emsp;对于想要python进阶的朋友首先由要学习的就是代码风格，一手漂亮的代码是人们识别初级程序员与高级程序员最简单直接的方式。Pythonic是由Google在[《python代码风格指南》](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/)中提出的，其中包含了类、函数、注释、TODO等各种python常用的功能所提倡的书写方式。需要进行学习的朋友可以直接点击[这里](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/)查看完整的指南。
 
-#### 2.可变对象与不可变对象
+### 2.可变对象与不可变对象
 &emsp;&emsp;python中有一个非常重要的概念就是可变变量与不可变变量，所谓可变变量就是当对变量进行改变时，当前变量可以直接在原有地址进行改变，不需要声明重新创建新的空间来存储改编后的变量值；不可变变量与之相反，变量创建后不能进行修改，要想对变量进行修改只能开辟新的地址空间，将变量指针指向新的地址空间。下面是python中常见的可变数据类型与不可变数据类型：
 
 **不可变数据类型**：Number（数字）、String（字符串）、Tuple（元组）  
@@ -46,7 +46,7 @@ print('b:' + str(b))        # b:{'a': 'hhhh'}
 ![image](https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.x30oinj2ykn.png)
 
 
-#### 3. 参数传递
+### 3. 参数传递
 &emsp;&emsp;**在python中只有一种参数传递传递方式：传引用，也就是传递给函数的是原变量实际所指向的内存空间，修改的时候就会根据该引用的指向去修改该内存中的内容**，所以按道理说我们在函数内改变了传递过来的参数的值的话，原来外部的变量也应该受到影响。但是上面的一点中我们说到了python中有可变类型和不可变类型，这样的话，**当传过来的是可变类型(list,dict)等可变类型时，我们在函数内部修改就会影响函数外部的变量**。而**传入的是不可变类型时在函数内部修改改变量并不会影响函数外部的变量，因为修改的时候会先复制一份再修改**。下面通过代码证明一下：
 
 ```python
@@ -72,7 +72,7 @@ outer b_list:[10, 11, '13']
 ```
 &emsp;&emsp;可以明显的看出int类型传入的变量在函数内部虽然已经发生了改变，但是外部值依然没有改变；而传入的list外部变量随着函数内部变量的变化发生了改变
 
-#### 4. 字符串拼接
+### 4. 字符串拼接
 &emsp;&emsp;**对于大量字符串的拼接操作，尽量应该使用将字符串加入列表，然后使用join函数加入空字符串的方式进行拼接**，避免使用for循环+=或+方式进行拼接，因为字符串是不可变对象，这种方式会不断地去创建新的对象，导致二次方的运行时间。
 ```diff
 + items = ['<table>']
@@ -86,11 +86,11 @@ outer b_list:[10, 11, '13']
 -     employee_table += '<tr><td>%s, %s</td></tr>' % (last_name, first_name)
 - employee_table += '</table>'
 ```
-#### 5.生成器、迭代器  
+### 5.生成器、迭代器  
 
-#### 6. raise  
+### 6. raise  
 
-#### 7. 装饰器
+### 7. 装饰器
 
 
 ##### 参考文献
