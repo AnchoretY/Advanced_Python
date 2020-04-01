@@ -106,9 +106,71 @@ outer b_list:[10, 11, '13']
 -     employee_table += '<tr><td>%s, %s</td></tr>' % (last_name, first_name)
 - employee_table += '</table>'
 ```
-### 5.生成器、迭代器  
+### 5.迭代器  
+&emsp;&emsp;迭代器是一个**可以记住遍历的位置的对象**。迭代器对象**从集合的第一个元素开始访问，直到所有的元素被访问完结束**。迭代器**只能往前不会后退**。
+&emsp;&emsp;迭代器包含两个基本方法：iter()和next()。iter()创建迭代器,字符串，列表或元组对象都可用于创建迭代器,next()输出迭代器的下一个对象。 
 
-### 6. raise  
+##### 特点：
+- 迭代器不可重复利用，迭代完就变成空了，再次调用会引发StopIteration异常；需要通过copy包中的deepcopy复制迭代器从而可循环使用。
+- 迭代器不能回退，只能往前进行迭代；
+- **Lazy evaluation**:迭代器不要求你事先准备好整个迭代过程中所有的元素。**迭代器仅仅在迭代至某个元素时才计算该元素，而在这之前或之后，元素可以不存在或者被销毁**。这个特点使得它**特别适合用于遍历一些巨大的或是无限的集合**，比如几个G的文件，或是斐波那契数列等等。这个特点被称为延迟计算或惰性求值(Lazy evaluation)；
+- **迭代器更大的功劳是提供了一个统一的访问集合的接口**。只要是实现了iter()方法的对象，就可以使用迭代器进行访问。
+
+##### 遍历
+&emsp;&emsp;第一种方式就是通过不断地的**调用next()函数**来进行
+```python
+>>> list=[1,2,3,4]
+>>> it = iter(list)    # 创建迭代器对象
+>>> print (next(it))   # 输出迭代器的下一个元素
+1
+>>> print (next(it))
+2
+```
+&emsp;&emsp;迭代器也**可以使用for循环进行遍历**
+```python
+list=[1,2,3,4]
+it = iter(list)    # 创建迭代器对象
+for x in it:
+    print (x, end=" ")
+```
+##### 迭代器创建
+&emsp;&emsp;迭代器的创建第一种就是使用python已经提供的**iter()函数之间使用列表、字符串创建**。
+```python
+>>> list=[1,2,3,4]
+>>> it = iter(list)    # 创建迭代器对象
+```
+&emsp;&emsp;另一种更加定制化的方式就是**自定义用户的迭代器类**。把一个类作为一个迭代器使用需要在类中实现两个方法 __iter__() 与 __next__() 。
+- __iter__() 方法返回一个特殊的迭代器对象， 这个迭代器对象实现了 __next__() 方法并**通过 StopIteration 异常标识迭代的完成**。
+- __next__() 方法会返回下一个迭代器对象。
+&emsp;&emsp;创建一个返回数字的迭代器，初始值为 1，逐步递增 1：
+```
+class MyNumbers:
+  def __iter__(self):
+    self.a = 1
+    return self
+ 
+  def __next__(self):
+    if self.a <= 20:
+      x = self.a
+      self.a += 1
+      return x
+    else:
+      raise StopIteration
+ 
+myclass = MyNumbers()
+myiter = iter(myclass)
+ 
+print(next(myiter))  # 1
+print(next(myiter))  # 2
+print(next(myiter))  # 3
+...
+print(next(myiter))  # 20
+print(next(myiter))  # StopIteration异常
+```
+
+### 6. 生成器
+ 
+
 
 ### 7. 装饰器
 
