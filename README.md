@@ -49,6 +49,7 @@ print i is j                    #False
 
 &emsp;&emsp;这里有i和j俩个变量的值为77，通过打印77的ID和变量i，j在内存中的id我们得知它们都是指向同一块内存。所以说i和j都是指向同一个对象的。然后我们修改j的值，让j的值+1.按道理j修改之后应该i的值也发生改变的，因为它们都是指向的同一块内存，但结果是并没有。因为int类型是不可变类型，所有其实是j复制了一份到新的内存地址然后+1，然后j又指向了新的地址。所以j的内存id发生了变化。
 
+![](https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.57cmchxkny8.png)
 <img src="https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.57cmchxkny8.png" alt="image" style="zoom:10%;" />
 
 **可变类型**
@@ -107,10 +108,10 @@ outer b_list:[10, 11, '13']
 - employee_table += '</table>'
 ```
 ### 5.迭代器  
-&emsp;&emsp;迭代器是一个**可以记住遍历的位置的对象**。迭代器对象**从集合的第一个元素开始访问，直到所有的元素被访问完结束**。迭代器**只能往前不会后退**。
+&emsp;&emsp;迭代器是一个**可以记住遍历的位置的对象**。迭代器对象**从集合的第一个元素开始访问，直到所有的元素被访问完结束**。迭代器**只能往前不会后退**。  
 &emsp;&emsp;迭代器包含两个基本方法：iter()和next()。iter()创建迭代器,字符串，列表或元组对象都可用于创建迭代器,next()输出迭代器的下一个对象。 
 
-##### 特点：
+##### 特点
 - 迭代器不可重复利用，迭代完就变成空了，再次调用会引发StopIteration异常；需要通过copy包中的deepcopy复制迭代器从而可循环使用。
 - 迭代器不能回退，只能往前进行迭代；
 - **Lazy evaluation**:迭代器不要求你事先准备好整个迭代过程中所有的元素。**迭代器仅仅在迭代至某个元素时才计算该元素，而在这之前或之后，元素可以不存在或者被销毁**。这个特点使得它**特别适合用于遍历一些巨大的或是无限的集合**，比如几个G的文件，或是斐波那契数列等等。这个特点被称为延迟计算或惰性求值(Lazy evaluation)；
@@ -169,12 +170,47 @@ print(next(myiter))  # StopIteration异常
 ```
 
 ### 6. 生成器
-&emsp;&emsp;在Python 中，使用了 yield 的函数被称为生成器（generator）。本质上生成器其实是一个特殊的函数，该函数返回的对象为一个迭代器，在调用生成器运行的过程中，每次遇到 yield 时函数会暂停并保存当前所有的运行信息，返回 yield 的值, 并在下一次执行 next() 方法时从当前位置继续运行。
+&emsp;&emsp;在Python 中，**使用了yield**的**函数**被称为生成器（generator）。本质上生成器其实是一个特殊的函数，该函数返回的对象为一个迭代器，在调用生成器运行的过程中，**每次遇到 yield 时函数会暂停并保存当前所有的运行信息，返回 yield 的值, 并在下一次执行 next() 方法时从当前位置继续运行**。
 
-调用一个生成器函数，返回的是一个迭代器对象。
+##### 生成器与迭代器的联系：
+> 调用一个生成器函数，返回的是一个迭代器对象。
 
-> 生成器与迭代器的区别: 生成器是函数通过yield来进行保存状态，迭代器是一个类，通过实例参数保存状态
+##### 生成器与迭代器的区别: 
+> 生成器是函数,通过yield来进行保存状态，迭代器是一个类，通过实例参数保存状态
 
+
+##### 生成器的遍历
+&emsp;&emsp;由于生成器本质上就是一种特殊的迭代器，因此其遍历方式也与迭代器一样。
+
+##### 生成器创建
+&emsp;&emsp;生成器最常见的创建方式就是直接自定义生成式函数，以斐波那契数生成器为例：
+```python
+import sys
+ 
+def fibonacci(n): # 生成器函数 - 斐波那契
+    a, b, counter = 0, 1, 0
+    while True:
+        if (counter > n): 
+            return
+        yield a
+        a, b = b, a + b
+        counter += 1
+f = fibonacci(10) # f 是一个迭代器，由生成器返回生成
+ 
+while True:
+    try:
+        print (next(f), end=" ")
+    except StopIteration:
+        sys.exit()
+```
+&emsp;&emsp;还有另一种与列表生成式非常相似的生成器创建方式，只需要将列表生成式的“[]”换成“()”,下面为使用实例：
+```python
+generator_ex = (x*x for x in range(10))
+print(generator_ex)       
+
+output:
+    <generator object <genexpr> at 0x7f2476a93c78>
+```
 
 ### 7. 装饰器
 
