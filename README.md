@@ -261,6 +261,10 @@ g = genertor(10000)
 
 print("使用返回列表的函内存占用:{}".format(sys.getsizeof(l)))
 print("使用生成器内存占用:{}".format(sys.getsizeof(g)))
+
+output:
+    使用返回列表的函内存占用:87624
+    使用生成器内存占用:120
 ```
 
 
