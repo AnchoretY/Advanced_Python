@@ -50,7 +50,6 @@ print i is j                    #False
 &emsp;&emsp;这里有i和j俩个变量的值为77，通过打印77的ID和变量i，j在内存中的id我们得知它们都是指向同一块内存。所以说i和j都是指向同一个对象的。然后我们修改j的值，让j的值+1.按道理j修改之后应该i的值也发生改变的，因为它们都是指向的同一块内存，但结果是并没有。因为int类型是不可变类型，所有其实是j复制了一份到新的内存地址然后+1，然后j又指向了新的地址。所以j的内存id发生了变化。
 
 ![](https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.57cmchxkny8.png)
-<img src="https://raw.githubusercontent.com/AnchoretY/images/master/blog/image.57cmchxkny8.png" alt="image" style="zoom:10%;" />
 
 **可变类型**
 ```python
@@ -216,7 +215,7 @@ output:
 
 
 ### 8. 使用生成器替代列表生成式
-&emsp;&emsp;再初学者使用python中最常用到的数据结构就是列表了，但是列表存在缺点：创建列表对象时会一次性将全部数据放入内存，导致当数据量很大时很容易造成内存不足、无效的内存占用的问题。而在大多数情况下我们可以使用生成器来对列表生成式进行进行替代，因为生成器中的元素是按照指定函数推演出来的，只有调用时才生成相应的数据，大大节省了内存空间。
+&emsp;&emsp;再初学者使用python中最常用到的数据结构就是列表了，但是列表存在缺点：创建列表对象时会一次性将全部数据放入内存，导致当数据量很大时很容易造成内存不足、无效的内存占用的问题。而在大多数情况下我们可以使用生成器来对列表生成式进行进行替代，因为生成器中的元素是按照指定函数推演出来的，只有调用时才生成相应的数据，大大节省了内存空间。  
 &emsp;&emsp;这里可以使用一个生成100w个数的列表和生成器进行对比:
 ```python
 import time
@@ -241,6 +240,31 @@ output:
     生成器返回结果占用内存大小：120
 ```
 &emsp;&emsp;可见，生成器返回结果的时间几乎为0，结果所占内存空间的大小相对于列表生成器来说也要小的多。
+
+### 8. 使用生成器替代直接返回列表的函数
+&emsp;&emsp;使用生成器替代直接返回列表的函数不仅可以降低内存占用而且可以使代码更加简洁。原理与上面使用生成器替代列表生成器类似。
+```python
+import sys
+
+def generate_list(x):
+    result = []
+    for i in range(x):
+        result.append(i)
+    return result
+
+def genertor(x):
+    for i in range(x):
+        yield i
+
+l = generate_list(10000)
+g = genertor(10000)
+
+print("使用返回列表的函内存占用:{}".format(sys.getsizeof(l)))
+print("使用生成器内存占用:{}".format(sys.getsizeof(g)))
+```
+
+
+
 
 ##### 参考文献
 - 《编写高质量python代码的59个有效方法》
