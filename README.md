@@ -267,7 +267,30 @@ output:
     使用生成器内存占用:120
 ```
 
+### 9. nametuple使用
+&emsp;&emsp;nametuple为python原生库collections中继承自tuple的子类，其核心特性是使用该类型创建的对象拥有可访问的属性。使用方式如下：
+```python
+from collections import namedtuple
 
+ntuple = namedtuple("student",["name","age"])  # 规定tuple的结构
+st1 = ntuple("tom",1)  # 创建nametuple对象
+print(st1.name)
+
+output:
+    tom
+```
+
+### 10. 实例方法、类方法与静态方法
+&emsp;&emsp;python中
+
+
+
+##### 实力方法
+&emsp;&emsp;
+&emsp;&emsp;在python中可以使用@staticmethod装饰器来声明静态变量，静态变量属于类本身，可以通过类对象进行访问，也可以直接通过类进行访问，静态方法只能调用静态变量。
+```python
+
+```
 
 
 ##### 参考文献
