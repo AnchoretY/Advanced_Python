@@ -281,19 +281,88 @@ output:
 ```
 
 ### 10. 实例方法、类方法与静态方法
-&emsp;&emsp;python中
 
+&emsp;&emsp;在python面向对象的编程中实例方法（instance method），类方法（class method）与静态方法（static method）经常容易混淆，下面为这三种方法的的区别:
 
+##### 实例方法
 
-##### 实力方法
-&emsp;&emsp;
-&emsp;&emsp;在python中可以使用@staticmethod装饰器来声明静态变量，静态变量属于类本身，可以通过类对象进行访问，也可以直接通过类进行访问，静态方法只能调用静态变量。
+&emsp;&emsp;实例方法为属于实例的方法，其**第一个参数一定为self，表示实例对象本身**。下面为实例方法的实例
+
 ```python
+class Kls(object):
+    def __init__(self, data):
+        self.data = data
 
+    def printd(self):
+        print(self.data)
+
+ik1 = Kls('leo')
+ik2 = Kls('lee')
+
+ik1.printd()
+ik2.printd()
+
+output:
+  leo
+  lee
 ```
+
+&emsp;&emsp;在上面的例子中，我们可以看出，当使用`ik1.printd()`调用实例方法时，实例`ik1`会传递给`self`参数，这样`self`参数就可以引用当前正在调用实例方法的属性。利用实例方法的这个特性，上述代码正确输出了两个实例的成员数据。
+
+##### 类方法
+
+&emsp;&emsp;Python 的类方法采用装饰器`@classmethod`来进行定义,其第一个参数为cls表示类本身。下面为类方法的使用实例：
+
+```python
+class Kls(object):
+    num_inst = 0
+
+    def __init__(self):
+        Kls.num_inst = Kls.num_inst + 1
+
+    @classmethod
+    def get_no_of_instance(cls):
+        return cls.num_inst
+
+ik1 = Kls()
+print ik1.get_no_of_instance()
+
+ik2 = Kls()
+print Kls.get_no_of_instance()
+
+output:
+  1
+  2
+```
+
+&emsp;&emsp;在上面的例子中我们可以看出`get_no_of_instance()`函数使用@classmethod声明为类方法，传入cls表示对象本身，获取类变量num_inst,而类变量在每次实例化时进行增1，从而实现使用`get_no_of_instance()`获取实例个数。
+
+##### 静态方法
+
+&emsp;&emsp;在python中可以**使用@staticmethod装饰器来声明静态方法**，静态方法**可以通过类对象进行访问，也可以直接通过类进行访问**，静态方法只能调用静态变量。
+
+```python
+IND = 'ON'
+
+class Kls(object):
+    def __init__(self, data):
+        self.data = data
+
+    @staticmethod
+    def checkind(x):
+        return IND == x
+
+Kls(1).checkind('ON')
+```
+
+### 
+
+
+
 
 
 ##### 参考文献
+
 - 《编写高质量python代码的59个有效方法》
 - https://www.jianshu.com/p/c5582e23b26c
 
