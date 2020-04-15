@@ -1,7 +1,13 @@
 # Advanced_Python
+
+[TOC]
+
 Python一些比较高阶的使用技巧
 
-### 1. Pythonic  
+
+
+### 1. Pythonic
+
 &emsp;&emsp;对于想要python进阶的朋友首先由要学习的就是代码风格，一手漂亮的代码是人们识别初级程序员与高级程序员最简单直接的方式。Pythonic是由Google在[《python代码风格指南》](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/)中提出的，其中包含了类、函数、注释、TODO等各种python常用的功能所提倡的书写方式。需要进行学习的朋友可以直接点击[这里](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/)查看完整的指南。
 
 ##### 命名
@@ -355,7 +361,45 @@ class Kls(object):
 Kls(1).checkind('ON')
 ```
 
-### 
+### 11. 使用@property绑定属性
+
+
+
+### 12. 使用`__`进行变量私有化
+
+&emsp;&emsp;在python中**为了使用让内部属性不被外部所访问，可以把属性的名称前加上两个下划线`__`**，在Python中，实例的**变量名如果以`__`开头，就变成了一个私有变量（private）**，只有内部可以访问，外部不能访问。具体使用我们可以看下面的例子：
+
+```python
+class Student(object):
+
+    def __init__(self, name, score):
+        self.__name = name
+        self.score = score
+
+    def print_score(self):
+        print('%s: %s' % (self.__name, self.__score))
+   
+s = Student("Tom",97)
+print("s.score")
+output:
+  97
+
+print("s.__name")
+output:
+  AttributeError: 'Student' object has no attribute '__name'
+```
+
+&emsp;&emsp;在上面的例子中，我们可以看出，score属性并没有使用`__`来进行私有化，在外部仍然可以可以进行正常的访问，而对于name使用`__`进行私有化，外部无法进行访问。
+
+&emsp;&emsp;双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。不能直接访问`__name`是因为Python解释器对外把`__`变量名变量改成了`_类名__变量名`，所以，仍然可以通过`_Student__name`来访问`__name`变量：
+
+```python
+s._Student__name
+output:
+  Tom
+```
+
+
 
 
 
