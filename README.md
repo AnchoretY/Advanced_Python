@@ -1,7 +1,7 @@
 # Advanced_Python
 
 [TOC]
-* [1.Pythonic](Pythonic)
+* [1.Pythonic](#Pythonic)
 
 Python一些比较高阶的使用技巧
 
